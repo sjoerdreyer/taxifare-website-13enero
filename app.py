@@ -2,6 +2,7 @@ import streamlit as st
 
 import numpy as np
 import pandas as pd
+import requests
 
 st.markdown("""# This is a header
 ## This is a sub header
@@ -11,6 +12,23 @@ df = pd.DataFrame({
     'first column': list(range(1, 11)),
     'second column': np.arange(10, 101, 10)
 })
+
+passcount = st.slider('Select nr of passangers', 1, 4, 1)
+dropofflat = 15.1092832019
+dropofflon = 17.12039846732
+
+api_url='https://taxifare.lewagon.ai/predict'
+params = {dropofflat, dropofflon, passcount, }
+
+fare = requests.get(api_url, params=params)['data']
+
+st.write(fare)
+
+
+
+spell = st.secrets['spell']
+key = st.secrets.some_magic_api.key
+
 
 # this slider allows the user to select a number of lines
 # to display in the dataframe
